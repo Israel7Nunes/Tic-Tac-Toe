@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="shortcut icon" href="imgs/jogo-desenhado-a-mao-tic-tac-toe.png">
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+
+    <header>
+        <h1>Tic Tac Toe</h1>
+    </header>
+    
+
+    <div class="container">
+        <img src="imgs/pastilha-tic-tac-menta-fresh-com-14-5g-b81-removebg-preview.png" alt="">
+
+        <div class="board" id="board">
+            <div class="cell" onclick="cellClicked(0)"></div>        
+            <div class="cell" onclick="cellClicked(1)"></div>
+            <div class="cell" onclick="cellClicked(2)"></div>
+            <div class="cell" onclick="cellClicked(3)"></div>
+            <div class="cell" onclick="cellClicked(4)"></div>
+            <div class="cell" onclick="cellClicked(5)"></div>
+            <div class="cell" onclick="cellClicked(6)"></div>
+            <div class="cell" onclick="cellClicked(7)"></div>
+            <div class="cell" onclick="cellClicked(8)"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentPlayer = 'X';
+        let board = ['', '', '', '', '', '', '', '', ''];
+
+        function cellClicked(index) {
+            if (board[index] === '') {
+                board[index] = currentPlayer;
+                document.getElementById('board').children[index].innerText = currentPlayer;
+                checkWinner();
+                // o innerText ali em cima vai escrever o que o currentPlayer tiver armazenado podendo ser o X ou O
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                // o motivo de ter 2 currentPlayer acima é pra poder reatribuir valor, não apenas para atribuir. Ali tambem tem um operador ternario, o "?"
+            }
+        }
+
+        function checkWinner() {
+            const winConditions = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], 
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+                [0, 4, 8], [2, 4, 6]
+            ];
+            // dentro de colchetes é array
+        
+
+            for (let condition of winConditions) {
+                const [a, b, c] = condition;
+                if (board[a] !== '' && board[a] === board[b] && board[a] === board[c]) {
+                    alert(`JOGADOR "${board[a]}" VENCEU!`);
+                    resetBoard();
+                    return;
+                }
+            }
+
+            if (!board.includes('')) {
+                // Acima, "se não puder incuir mais nada", significa isso
+                alert('EMPATE!');
+                resetBoard();
+            }
+
+        }
+
+        function resetBoard() {
+            currentPlayer = 'X';
+            board = ['', '', '', '', '', '', '', '', ''];
+            for (let i = 0; i < 9; i++) {
+                document.getElementById('board').children[i].innerText = '';
+            }
+        }
+
+
+
+    </script>
+
+    <div style="position: absolute; bottom:4%; opacity: 0.5;"> Ícones feitos por <a href="https://www.flaticon.com/br/autores/freepik" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.com/br/" title="Flaticon">www.flaticon.com'</a></div>
+
+    <footer>
+        <p>Site feito por Israel Salvalaio Nunes | Finalizado em 14/03/2024 &copy;</p>
+    </footer>
+
+</body>
+</html>
